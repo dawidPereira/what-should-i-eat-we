@@ -15,7 +15,7 @@
                     color="teal"
                     dark
                     large
-                    href="/pre-made-themes"
+                    href="/find"
             >
                 Znajdź coś dla siebie
             </v-btn>

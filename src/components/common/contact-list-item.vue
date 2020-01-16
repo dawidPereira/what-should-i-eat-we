@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        name: "ContactPosition",
+        name: "contact-list-item",
         props: {
             icon: String,
             data: String

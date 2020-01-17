@@ -4,7 +4,7 @@
         <info/>
         <v-container grid-list-xl>
             <v-layout row wrap justify-center class="my-12">
-                <Find class="full-width"/>
+                <search-stepper class="full-width"/>
             </v-layout>
         </v-container>
         <section>
@@ -33,11 +33,12 @@
     import info from "@/components/home/info";
     import About from "@/components/home/about";
     import Find from "@/views/Find";
+    import SearchStepper from "@/components/search/search-stepper";
 
     export default {
         name: "Home",
         components: {
-            Find,
+            SearchStepper,
             About,
             info,
             hero

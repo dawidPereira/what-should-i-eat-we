@@ -1,11 +1,11 @@
 ﻿<template>
     <v-text-field
-            v-model="data"
+            v-model="value"
             color="teal"
             :label="label"
-            outlined
             :rules="rules"
             class="teal--text"
+            @change="valueChanged"
     ></v-text-field>
 </template>
 
@@ -14,8 +14,14 @@
         name: "teal-text-field",
         props: {
             label : String,
-            data : String,
-            rules : Function
+            rules : Function,
+            value : Number
+        },
+        methods:{
+            valueChanged(){
+                this.$emit('valueChanged', this.value);
+                console.log(this.$children[0].errorMessages);
+            },
         }
     }
 </script>

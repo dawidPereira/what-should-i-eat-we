@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import SearchPanel from "@/components/search/search-panel";
+    import SearchPanel from "@/components/search/search_panel/search-panel";
     export default {
         name: "Find",
         components: {SearchPanel},

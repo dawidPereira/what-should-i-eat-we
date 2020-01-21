@@ -2,7 +2,7 @@
     <div>
         <v-subheader class="font-weight-bold ma-n1 mb-n6">Alergeny:</v-subheader>
         <search-column class="ma-n1">
-            <search-checkbox label="Mleko krowie" @valueChanged="milkValueChanged"></search-checkbox>
+            <search-checkbox label="Mleko krowie"  @valueChanged="milkValueChanged"></search-checkbox>
             <search-checkbox label="Jaja kurze" @valueChanged="eggsValueChanged"></search-checkbox>
             <search-checkbox label="Pszenica" @valueChanged="wheatValueChanged"></search-checkbox>
             <search-checkbox label="Ryby i skorupiaki" @valueChanged="shellfishValueChanged"></search-checkbox>
@@ -64,5 +64,8 @@
 </script>
 
 <style scoped>
+    .label-message{
+        font-size: .8rem !important;
+    }
 
 </style>

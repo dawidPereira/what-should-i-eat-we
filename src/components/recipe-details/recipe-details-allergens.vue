@@ -3,7 +3,7 @@
         <v-col class="mt-2 mb-3">
             <v-row justify="space-around">
                 <div v-for="item in allergens" :key="item">
-                    <v-chip color="grey lighten-3" text-color="teal" small>
+                    <v-chip color="teal" text-color="white" small>
                         {{item}}
                     </v-chip>
                 </div>

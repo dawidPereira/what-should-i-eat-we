@@ -98,7 +98,7 @@
 
 <script>
     export default {
-        name: "recipe-details",
+        name: "recipe-details-v2",
         data: () => ({
             image: "http://codzisw.menu/wp-content/uploads/2016/06/nuggetsy-2-900x601.jpg",
             allergens: ["Gluten", "Mleko", "Orzechy", "Jaja kurze", "Ryby i skorupiaki", "Soja"]

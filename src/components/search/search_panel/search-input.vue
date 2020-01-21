@@ -1,49 +1,49 @@
 ﻿<template>
     <v-container>
-        <v-subheader class="font-weight-bold ma-n1 mb-n6">Kalorie:</v-subheader>
+        <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Kalorie:</v-subheader>
         <v-row no-gutters>
             <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input"
+                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="caloriesLowerLimitChanged"></teal-text-field>
             </search-column>
             <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input"
+                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="caloriesUpperLimitChanged"></teal-text-field>
             </search-column>
         </v-row>
 
-        <v-subheader class="font-weight-bold ma-n1 mb-n6">Białko:</v-subheader>
+        <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Białko:</v-subheader>
         <v-row no-gutters>
             <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input"
+                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="proteinLowerLimitChanged"></teal-text-field>
             </search-column>
             <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input"
+                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="proteinUpperLimitChanged"></teal-text-field>
             </search-column>
         </v-row>
 
-        <v-subheader class="font-weight-bold ma-n1 mb-n6">Węglowodany:</v-subheader>
+        <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Węglowodany:</v-subheader>
         <v-row no-gutters>
             <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input"
+                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="carbohydratesLowerLimitChanged"></teal-text-field>
             </search-column>
             <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input"
+                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="carbohydratesUpperLimitChanged"></teal-text-field>
             </search-column>
         </v-row>
 
-        <v-subheader class="font-weight-bold ma-n1 mb-n6">Tłuszcz:</v-subheader>
+        <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Tłuszcz:</v-subheader>
         <v-row no-gutters>
             <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input"
+                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="fatLowerLimitChanged"></teal-text-field>
             </search-column>
             <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input"
+                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
                                  @valueChanged="fatUpperLimitChanged"></teal-text-field>
             </search-column>
         </v-row>
@@ -146,5 +146,14 @@
 </script>
 
 <style scoped>
-
+    .header{
+        font-size: 0.9rem !important;
+    }
+    
+    .input{
+        font-size: .9rem !important;
+    }
+    .v-label >>> label{
+        font-size: .8rem;
+    }
 </style>

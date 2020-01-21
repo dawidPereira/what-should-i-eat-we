@@ -13,17 +13,17 @@
                 <search-meal-type @valueChanged="updateMealTypes"></search-meal-type>
             </v-container>
             <v-container class="ma-2">
-                <div v-if="errors.length" class="error--text">
+                <div v-if="errors.length" class="error--text error-message mt-n8 mb-8 ml-1">
                     <b>Popraw poniższe błędy:</b>
                     <ul>
                         <li v-for="error in errors">{{ error }}</li>
                     </ul>
                 </div>
             </v-container>
-            <v-list-item>
-                <v-list-item-content>
-                    <v-btn class="mr-4 white--text ma-1" type="submit" color="teal">Szukaj</v-btn>
-                    <v-btn class="white--text ma-1" @click="clear" color="teal">Wyczyść</v-btn>
+            <v-list-item >
+                <v-list-item-content class="ma-2 mt-n12">
+                    <v-btn class="white--text mb-2" type="submit" color="teal">Szukaj</v-btn>
+                    <v-btn class="white--text" @click="clear" color="teal">Wyczyść</v-btn>
                 </v-list-item-content>
             </v-list-item>
         </v-form>
@@ -176,5 +176,7 @@
 </script>
 
 <style scoped>
-
+    .error-message{
+        font-size: .8rem !important;
+    }
 </style>

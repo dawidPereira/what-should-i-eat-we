@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-checkbox v-model="value" :label="label" class="mb-n8" color="teal" @change="valueChanged"></v-checkbox>
+    <v-checkbox v-model="value" :label="label" class="mb-n8 v-label v-input"  color="teal" @change="valueChanged"></v-checkbox>
 </template>
 
 <script>
@@ -18,5 +18,11 @@
 </script>
 
 <style scoped>
-
+    .v-label >>> label{
+          font-size: .8rem;
+      }
+    .v-input >>> div ::before{
+        margin-top: -6px;
+        margin-bottom: 6px;
+    }
 </style>

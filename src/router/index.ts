@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Find from '../views/Find.vue'
+import Details from '../views/Details.vue'
+
 import Test from '../views/Test.vue'
 
 Vue.use(VueRouter);
@@ -20,6 +22,11 @@ const routes = [
     path: '/find',
     name: 'find',
     component: Find
+  },
+  {
+    path: '/details',
+    name: 'details',
+    component: Details
   },
   {
     path: '/test',

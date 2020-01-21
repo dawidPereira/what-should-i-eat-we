@@ -1,5 +1,5 @@
 ﻿﻿<template>
-    <v-container fluid row wrap justify-center class="mt-n2">
+    <v-container fluid row wrap justify-center >
         <v-data-iterator
                 :items="items"
                 :items-per-page.sync="itemsPerPage"
@@ -13,7 +13,7 @@
                 <v-toolbar
                         dark
                         color="teal darken-3"
-                        class="mb-1"
+                        class="mb-1 ml-12 mr-1 mt-1"
                 >
                     <v-text-field
                             v-model="search"
@@ -62,21 +62,17 @@
             </template>
 
             <template v-slot:default="props">
-                <v-row class="mt-n10 mb-12">
+                <v-row class=" mb-12 ml-2">
                     <v-col
                             v-for="item in props.items"
                             :key="item.name"
-                            cols="12"
-                            sm="3"
-                            md="3"
-                            lg="4"
-                            class="col-md-12"
+                            :cols="12"
+                            class="ma-2"
                     >
                         <recipe-card :name="item.name" 
                                      :image="item.image"
-                                     :description="item.description"
                                      :calories="item.calories"
-                                     :carbs="item.carbs"
+                                     :carbohydrates="item.carbohydrates"
                                      :fat="item.fat"
                                      :protein="item.protein"
                                      :allergens="item.allergens"
@@ -88,7 +84,7 @@
             </template>
 
             <template v-slot:footer>
-                <v-row class="mt-2 ml-1 mr-n1" align="center" justify="center">
+                <v-row class="mt-2 ml-12 mr-1" align="center" justify="center">
                     <span class="grey--text">Przepisów na stronę</span>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on }">
@@ -147,7 +143,7 @@
 </template>
 
 <script>
-    import RecipeCard from "@/components/search/recipe-card";
+    import RecipeCard from "@/components/search/search_result/recipe-card";
     export default {
         components: {RecipeCard},
         data () {
@@ -157,7 +153,7 @@
                 filter: {},
                 sortDesc: false,
                 page: 1,
-                itemsPerPage: 6,
+                itemsPerPage: 3,
                 sortBy: 'calories',
                 keys: [
                     'Name',
@@ -170,100 +166,100 @@
                     {
                         name: 'Frozen Yogurt',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "frozen-yogurt.jpg",
                         calories: 159,
                         fat: 6.0,
-                        carbs: 24,
+                        carbohydrates: 24,
                         protein: 4.0,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Ice cream sandwich',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "ice-cream-sandwich.jpeg",
                         calories: 237,
                         fat: 9.0,
-                        carbs: 37,
+                        carbohydrates: 37,
                         protein: 4.3,
                         allergens:["Gluten", "Mleko", "Orzechy", "Jaja kurze",  "Ryby i skorupiaki", "Soja"]
                     },
                     {
                         name: 'Eclair',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "choc-eclairs.jpg",
                         calories: 262,
                         fat: 16.0,
-                        carbs: 23,
+                        carbohydrates: 23,
                         protein: 6.0,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Cupcake',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+                        image: 'nuggetsy-6.jpg',
                         calories: 305,
                         fat: 3.7,
-                        carbs: 67,
+                        carbohydrates: 67,
                         protein: 4.3,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Gingerbread',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 356,
                         fat: 16.0,
-                        carbs: 49,
+                        carbohydrates: 49,
                         protein: 3.9,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Jelly bean',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 375,
                         fat: 0.0,
-                        carbs: 94,
+                        carbohydrates: 94,
                         protein: 0.0,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Lollipop',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 392,
                         fat: 0.2,
-                        carbs: 98,
+                        carbohydrates: 98,
                         protein: 0,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Honeycomb',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 408,
                         fat: 3.2,
-                        carbs: 87,
+                        carbohydrates: 87,
                         protein: 6.5,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'Donut',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 452,
                         fat: 25.0,
-                        carbs: 51,
+                        carbohydrates: 51,
                         protein: 4.9,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },
                     {
                         name: 'KitKat',
                         description: "Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-                        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+                        image: "nuggetsy-6.jpg",
                         calories: 518,
                         fat: 26.0,
-                        carbs: 65,
+                        carbohydrates: 65,
                         protein: 7,
                         allergens:["Gluten", "Mleko", "Orzechy"]
                     },

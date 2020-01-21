@@ -13,7 +13,7 @@
                         cols="12"
                         sm="9"
                 >
-                    <recipe-details-v2></recipe-details-v2>
+                    <recipe-card></recipe-card>
                 </v-col>
             </v-row>
         </v-container>
@@ -21,15 +21,14 @@
 </template>
 
 <script>
-    import RecipeCard from "../components/search/recipe-card";
     import SearchResult from "@/components/search/search_result/search-result";
     import SearchPanel from "@/components/search/search_panel/search-panel";
     import RecipeDetails from "@/components/recipe-details/recipe-details";
-    import RecipeDetailsV2 from "@/components/recipe-details/recipe-details-v2";
+    import RecipeCard from "@/components/search/search_result/recipe-card";
 
     export default {
         name: "",
-        components: {RecipeDetailsV2, RecipeDetails, SearchPanel, SearchResult, RecipeCard}
+        components: {RecipeCard, RecipeDetails, SearchPanel, SearchResult}
     }
 </script>
 

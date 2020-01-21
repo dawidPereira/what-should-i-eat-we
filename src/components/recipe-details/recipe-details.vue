@@ -19,6 +19,15 @@
                 <v-card-text style="font-family: Montserrat, serif; font-size: .9rem;" class="ma-4 mt-n4">
                     {{description}}
                 </v-card-text>
+                <v-card-text style="font-family: Montserrat, serif; font-size: .9rem;" class="ma-4 mt-n4">
+                    {{description}}
+                </v-card-text>
+                <v-card-text style="font-family: Montserrat, serif; font-size: .9rem;" class="ma-4 mt-n4">
+                    {{description}}
+                </v-card-text>
+                <v-card-text style="font-family: Montserrat, serif; font-size: .9rem;" class="ma-4 mt-n4">
+                    {{description}}
+                </v-card-text>
             </v-row>
             <div class="macro ml-5 mt-n4">
                 <v-row>
@@ -33,7 +42,6 @@
                 </v-row>
             </div>
             <recipe-details-allergens :allergens="allergens"></recipe-details-allergens>
-
         </v-card>
     </v-container>
 </template>

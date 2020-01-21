@@ -21,14 +21,13 @@
 </template>
 
 <script>
-    import RecipeCard from "../components/search/recipe-card";
     import SearchResult from "@/components/search/search_result/search-result";
     import SearchPanel from "@/components/search/search_panel/search-panel";
     import RecipeDetails from "@/components/recipe-details/recipe-details";
 
     export default {
         name: "Details",
-        components: {RecipeDetails, SearchPanel, SearchResult, RecipeCard}
+        components: {RecipeDetails, SearchPanel, SearchResult}
     }
 </script>
 

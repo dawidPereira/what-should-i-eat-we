@@ -1,0 +1,188 @@
+﻿﻿body {
+  background: rgb(170, 170, 170);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.contain {
+  width: 100%;
+  height: 100vh;
+}
+
+.card-e {
+  background: white;
+  width: 18rem;
+  height: 32rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-e-radius {
+  background: white;
+  width: 18rem;
+  height: 32rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+
+.card-e-header {
+  background: white;
+  width: 100%;
+  height: 50%;
+  max-width: 100%;
+  max-height: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+
+  .card-e-img {
+    position: relative;
+    max-width: 130%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+.card-e-body {
+  padding-top: .7rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    margin-bottom: .1rem;
+  }
+
+  .info {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2rem;
+    width: 100%;
+    color: rgb(177, 175, 175);
+
+    .info-det {
+      font-weight: 400;
+      font-size: .9rem;
+    }
+
+    .mtk {
+      font-weight: 100;
+      font-size: .5rem;
+    }
+
+    .separator {
+      font-weight: 100;
+      margin-right: .5rem;
+      margin-left: .5rem;
+    }
+  }
+}
+
+.macro {
+  min-height: 1rem;
+  align-self: center;
+  width: 90%;
+  padding: .3rem;
+  padding-top: .5rem;
+
+  h6 {
+    font-weight: 100;
+    font-size: .8rem;
+    margin-bottom: .3rem;
+  }
+
+  p {
+    font-weight: 900;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+
+  .gram {
+    font-weight: 100;
+    font-size: .6rem;
+    color: rgb(177, 175, 175);
+    margin-left: .2rem;
+  }
+  .time {
+    font-weight: 100;
+    font-size: 1rem;
+    color: rgb(177, 175, 175);
+    margin-left: .2rem;
+  }
+}
+
+.v-chips-allergen{
+  min-height: 120px;
+}
+
+.alergens {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  overflow: visible !important;
+  
+
+  .aler {
+    font-weight: 400;
+    font-size: .8rem;
+    margin-right: .4rem;
+    align-self: flex-end;
+  }
+
+  .alergen {
+    font-weight: 900;
+    font-size: .6rem;
+    margin-right: .2rem;
+    background: rgb(194, 155, 240);
+    padding: .1rem .5rem;
+    margin-top: .2rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    align-self: flex-end;
+    cursor: default;
+
+    &:hover {
+      z-index: 130;
+      transform: scale(1.4);
+      transition: ease-in-out 300ms;
+    }
+  }
+}
+
+.card-e-footer {
+  width: 100%;
+  min-height: 3rem;
+  margin-top: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    text-transform: uppercase;
+    font-weight: 900;
+    color: rgb(54, 54, 54);
+    font-size: 1.2rem;
+
+    &:hover {
+      text-decoration: none;
+      color: rgb(133, 36, 243);
+      transition: ease-in-out;
+      transition-duration: 300ms;
+    }
+  }
+}

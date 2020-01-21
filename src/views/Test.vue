@@ -13,7 +13,7 @@
                         cols="12"
                         sm="9"
                 >
-                    <search-result></search-result>
+                    <recipe-details></recipe-details>
                 </v-col>
             </v-row>
         </v-container>
@@ -24,10 +24,11 @@
     import RecipeCard from "../components/search/recipe-card";
     import SearchResult from "@/components/search/search_result/search-result";
     import SearchPanel from "@/components/search/search_panel/search-panel";
+    import RecipeDetails from "@/components/recipe-details/recipe-details";
 
     export default {
         name: "",
-        components: {SearchPanel, SearchResult, RecipeCard}
+        components: {RecipeDetails, SearchPanel, SearchResult, RecipeCard}
     }
 </script>
 

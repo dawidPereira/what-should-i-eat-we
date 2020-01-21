@@ -62,14 +62,15 @@
             </template>
 
             <template v-slot:default="props">
-                <v-row>
+                <v-row class="mt-n10 mb-12">
                     <v-col
                             v-for="item in props.items"
                             :key="item.name"
                             cols="12"
-                            sm="6"
+                            sm="3"
                             md="3"
                             lg="4"
+                            class="col-md-12"
                     >
                         <recipe-card :name="item.name" 
                                      :image="item.image"
@@ -79,6 +80,7 @@
                                      :fat="item.fat"
                                      :protein="item.protein"
                                      :allergens="item.allergens"
+                                     class="mb-n10 col-md-12"
                         ></recipe-card>
                         
                     </v-col>
@@ -86,7 +88,7 @@
             </template>
 
             <template v-slot:footer>
-                <v-row class="mt-2" align="center" justify="center">
+                <v-row class="mt-2 ml-1 mr-n1" align="center" justify="center">
                     <span class="grey--text">Przepisów na stronę</span>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on }">
@@ -155,7 +157,7 @@
                 filter: {},
                 sortDesc: false,
                 page: 1,
-                itemsPerPage: 3,
+                itemsPerPage: 6,
                 sortBy: 'calories',
                 keys: [
                     'Name',

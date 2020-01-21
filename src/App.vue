@@ -15,7 +15,6 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import VeeValidate from 'vee-validate'
 
     export default Vue.extend({
         name: 'App',

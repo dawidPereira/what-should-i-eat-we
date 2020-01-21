@@ -1,11 +1,12 @@
 ﻿<template>
     <v-card
             :loading="loading"
-            class="mx-auto my-12"
+            class="mx-auto my-12 card"
             max-width="374"
+            hover
     >
         <v-img
-                height="250"
+                height="246"
                 :src="image"
         ></v-img>
         <div>
@@ -48,8 +49,8 @@
         </div>
         <v-divider class="mx-4 mt-n5 mb-n1"></v-divider>
 
-        <v-row class="ma-1 ml-4">
-            <v-chip-group v-for="item in allergens" :key="item" >
+        <v-row class="ma-1 ml-4 v-chips-allergen">
+            <v-chip-group v-for="item in allergens" :key="item">
                 <v-chip class="ma-1" text-color="teal" small>{{item}}</v-chip>
             </v-chip-group>
         </v-row>
@@ -74,13 +75,16 @@
         },
         methods: {
             reserve() {
-                this.loading = true
+                this.loading = true;
                 setTimeout(() => (this.loading = false), 2000)
             },
         },
     }
 </script>
-<style lang="scss">
-    @import '../../assets/css/style';
+<style lang="scss" scoped>
+    @import '../../styles/style';
     @import 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css';
+    .card{
+        min-width: 250px;
+    }
 </style>

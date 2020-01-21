@@ -80,12 +80,12 @@
                 })
             }
         },
-        data:() => ({
+        data: () => ({
             caloriesRules: [
-                v => ( v !== undefined && !isNaN(v)) || 'Musisz podać liczbę.',
+                v => isValid(v) || 'Musisz podać liczbę.',
             ],
         }),
-       
+
         methods: {
             caloriesLowerLimitChanged(value) {
                 this.data.calories.lowerLimit = value;
@@ -119,7 +119,7 @@
                 this.data.fat.upperLimit = value;
                 this.$emit('valueChanged', this.data)
             },
-            clear(){
+            clear() {
                 this.data.calories.lowerLimit = undefined;
                 this.data.calories.upperLimit = undefined;
                 this.data.protein.lowerLimit = undefined;
@@ -131,6 +131,17 @@
                 this.$emit('valueChanged', this.data)
             },
         },
+    }
+
+    function isValid(v) {
+        if (v !== undefined && !isFunction(v)) {
+            return !isNaN(v);
+        }
+        return true;
+    }
+    
+    function isFunction(functionToCheck) {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
     }
 </script>
 

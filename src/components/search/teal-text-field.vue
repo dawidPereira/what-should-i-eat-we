@@ -4,8 +4,8 @@
             color="teal"
             :label="label"
             :rules="rules"
-            class="teal--text"
-            @change="valueChanged"
+            class="teal--text input v-label"
+            @input="valueChanged"
     ></v-text-field>
 </template>
 
@@ -27,5 +27,10 @@
 </script>
 
 <style scoped>
-
+    .input{
+        font-size: .9rem !important;
+    }
+    .v-label >>> label{
+        font-size: .8rem;
+    }
 </style>

@@ -149,11 +149,4 @@
     .header{
         font-size: 0.9rem !important;
     }
-    
-    .input{
-        font-size: .9rem !important;
-    }
-    .v-label >>> label{
-        font-size: .8rem;
-    }
 </style>

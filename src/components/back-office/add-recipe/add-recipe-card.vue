@@ -15,8 +15,13 @@
                     </v-row>
                 </v-col>
                 <v-subheader class="font-weight-bold header ml-n4">Opis:</v-subheader>
-                <v-col>
-                   
+                <v-col class="ml-n4">
+                    <div>
+                    <tiptap-vuetify
+                            v-model="content"
+                            :extensions="extensions"
+                    />
+                    </div>
                 </v-col>
             </v-form>
         </v-col>
@@ -25,18 +30,47 @@
 
 <script>
     import TealTextField from "@/components/search/teal-text-field";
+    import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+    import 'tiptap-vuetify/dist/main.css'
     export default {
         name: "add-recipe-card",
-        components: {TealTextField},
+        components: {TealTextField, TiptapVuetify},
         data: () => ({
             name: "Genialny przepis",
-            items: [1,2,3,4,5]
+            items: [1,2,3,4,5],
+            editor: null,
+            extensions: [
+                History,
+                Blockquote,
+                Link,
+                Underline,
+                Strike,
+                Italic,
+                ListItem,
+                BulletList,
+                OrderedList,
+                [Heading, {
+                    options: {
+                        levels: [1, 2, 3]
+                    }
+                }],
+                Bold,
+                Code,
+                HorizontalRule,
+                Paragraph,
+                HardBreak
+            ],
+            // starting editor's content
+            content: `
+      <h1>Yay Headlines!</h1>
+      <p>All these <strong>cool tags</strong> are working now.</p>
+    `
         }),
         methods:{
             nameChanged(value) {
                 this.name = value;
             }
-        }
+        },
     }
 </script>
 

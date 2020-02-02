@@ -3,7 +3,7 @@
         <v-col>
             <v-card-title class="teal--text font-weight-bold title-font ml-3">{{recipeName}}</v-card-title>
             <v-card-text>
-                <v-form @submit="submit" ref="form" v-model="request" :lazy-validation="lazy">
+                <v-form @submit="submit" ref="form" v-model="request" :lazy-validation="lazy" action="https://localhost:5001/whatshouldieat//api/recipe/createrecipe">
                     <v-col>
                         <v-row>
                             <v-col :cols="6">
@@ -218,6 +218,7 @@
                     details: this.details,
                     image: this.image
                 });
+                this.$refs.form.submit();
             },
             gerRecipeIngredients(selectedIngredients) {
                 return selectedIngredients.map(this.getRecipeIngredientFromSelectedIngredient)

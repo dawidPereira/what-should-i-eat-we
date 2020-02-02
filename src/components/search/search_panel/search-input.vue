@@ -1,51 +1,59 @@
 ﻿<template>
     <v-container>
         <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Kalorie:</v-subheader>
-        <v-row no-gutters>
-            <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="caloriesLowerLimitChanged"></teal-text-field>
-            </search-column>
-            <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="caloriesUpperLimitChanged"></teal-text-field>
-            </search-column>
+        <v-row class="ma-0">
+            <v-col>
+                <v-text-field color="teal" label="od" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
+            <v-col>
+                <v-text-field color="teal" label="do" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
         </v-row>
-
+        
         <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Białko:</v-subheader>
-        <v-row no-gutters>
-            <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="proteinLowerLimitChanged"></teal-text-field>
-            </search-column>
-            <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="proteinUpperLimitChanged"></teal-text-field>
-            </search-column>
+        <v-row class="ma-0">
+            <v-col>
+                <v-text-field color="teal" label="od" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
+            <v-col>
+                <v-text-field color="teal" label="do" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
         </v-row>
-
+        
         <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Węglowodany:</v-subheader>
-        <v-row no-gutters>
-            <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="carbohydratesLowerLimitChanged"></teal-text-field>
-            </search-column>
-            <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="carbohydratesUpperLimitChanged"></teal-text-field>
-            </search-column>
+        <v-row class="ma-0">
+            <v-col>
+                <v-text-field color="teal" label="od" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
+            <v-col>
+                <v-text-field color="teal" label="do" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
         </v-row>
 
         <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Tłuszcz:</v-subheader>
-        <v-row no-gutters>
-            <search-column>
-                <teal-text-field label="od" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="fatLowerLimitChanged"></teal-text-field>
-            </search-column>
-            <search-column>
-                <teal-text-field label="do" :rules="caloriesRules" ref="input" class="input v-label"
-                                 @valueChanged="fatUpperLimitChanged"></teal-text-field>
-            </search-column>
+        <v-row class="ma-0">
+            <v-col>
+                <v-text-field color="teal" label="od" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
+            <v-col>
+                <v-text-field color="teal" label="do" class="v-label v-input"
+                              type="number" v-model="caloriesLimit"
+                              :rules="caloriesRules"/>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -84,6 +92,7 @@
             caloriesRules: [
                 v => isValid(v) || 'Musisz podać liczbę.',
             ],
+            caloriesLimit: null
         }),
 
         methods: {
@@ -146,6 +155,13 @@
 </script>
 
 <style scoped>
+    .v-input {
+        font-size: .9rem !important;
+    }
+
+    .v-label >>> label {
+        font-size: .8rem;
+    }
     .header{
         font-size: 0.9rem !important;
     }

@@ -5,7 +5,8 @@
             :label="label"
             :rules="rules"
             class="teal--text input v-label"
-            @input="valueChanged"
+            :disabled="disabled"
+            @change="valueChanged"
     ></v-text-field>
 </template>
 
@@ -13,14 +14,15 @@
     export default {
         name: "teal-text-field",
         props: {
-            label : String,
+            label : String, 
             rules : Function,
-            value : Number
+            value: String,
+            disabled: false
         },
         methods:{
             valueChanged(){
-                this.$emit('valueChanged', this.value);
-                console.log(this.$children[0].errorMessages);
+                let result = this.value;
+                this.$emit('valueChanged', result);
             },
         }
     }

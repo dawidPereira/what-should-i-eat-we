@@ -3,7 +3,7 @@
         <v-card class="pa-2 mt-n2" tile>
             <recipe-details-title :title="name" class="mb-n3"></recipe-details-title>
             <v-row no-gutters>
-                <recipe-details-ingredient-list :ingredients="ingredients"></recipe-details-ingredient-list>
+                <recipe-details-ingredient-list :ingredientsData="ingredientsData"></recipe-details-ingredient-list>
                 <v-col :cols="8">
                     <v-img class="ma-4" src="../../assets/nuggetsy-6.jpg"></v-img>
                 </v-col>
@@ -75,7 +75,7 @@
                 "                    leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s\n" +
                 "                    with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop\n" +
                 "                    publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            ingredients: [
+            ingredientsData: [
                 {
                     name: "Filet z piersi kurczaka",
                     quantity: 150

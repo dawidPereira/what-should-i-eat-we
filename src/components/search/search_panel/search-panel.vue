@@ -1,7 +1,7 @@
 ﻿﻿
 <template>
     <v-card height="100%" width="256" class="mx-auto">
-        <v-form @submit="submit" ref="form" v-model="request" :lazy-validation="lazy">
+        <v-form ref="form" :lazy-validation="lazy">
             <v-container>
                 <v-subheader class="font-weight-bold ma-n1 mb-n6 header">Kalorie:</v-subheader>
                 <v-row class="ma-0">
@@ -63,26 +63,26 @@
                 <v-subheader class="font-weight-bold ma-n1 mb-n6">Alergeny:</v-subheader>
                 <v-col>
                     <v-checkbox label="Mleko krowie" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.milk"/>
+                                v-model="allergens.milk.value"/>
                     <v-checkbox label="Jaja kurze" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.eggs"/>
+                                v-model="allergens.eggs.value"/>
                     <v-checkbox label="Pszenica" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.wheat"/>
+                                v-model="allergens.wheat.value"/>
                     <v-checkbox label="Ryby i skorupiaki" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.shellfish"/>
+                                v-model="allergens.shellfish.value"/>
                     <v-checkbox label="Soja" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.soy"/>
+                                v-model="allergens.soy.value"/>
                     <v-checkbox label="Orzechy" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="allergens.nuts"/>
+                                v-model="allergens.nuts.value"/>
                 </v-col>
                 <v-subheader class="font-weight-bold ma-n1 mb-n6">Dodatkowe wymagania:</v-subheader>
                 <v-col>
                     <v-checkbox label="Z produktów wegetariańskich" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="requirements.forVegetarian"/>
+                                v-model="requirements.forVegetarian.value"/>
                     <v-checkbox label="Z produktów wegańskich" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="requirements.forVegan"/>
+                                v-model="requirements.forVegan.value"/>
                     <v-checkbox label="Z produktów ekologicznych" class="mb-n8 v-label v-check-input" color="teal"
-                                v-model="requirements.ecological"/>
+                                v-model="requirements.ecological.value"/>
                 </v-col>
                 <!--                <search-meal-type @valueChanged="updateMealTypes"></search-meal-type>-->
             </v-container>
@@ -96,7 +96,7 @@
             </v-container>
             <v-list-item>
                 <v-list-item-content class="ma-2 mt-n8">
-                    <v-btn class="white--text mb-2" type="submit" color="teal">Szukaj</v-btn>
+                    <v-btn class="white--text mb-2" @click="submit" color="teal">Szukaj</v-btn>
                     <v-btn class="white--text" @click="clear" color="teal">Wyczyść</v-btn>
                 </v-list-item-content>
             </v-list-item>
@@ -106,6 +106,13 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import * as enums from '../../../app/enums/enums.js'
+    import * as allergenService from '../../../app/services/allergenService.js'
+    import * as requirementsService from '../../../app/services/requirementService'
+    import * as macroNutrientService from "../../../app/services/macroNutrientService"
+    import * as caloriesService from '../../../app/services/caloriesService'
+
     export default {
         name: "search-panel",
         components: {},
@@ -117,32 +124,59 @@
                 upperLimit: null,
             },
             carbohydrates: {
-                macroNutrient: 'Carbohydrates',
+                macroNutrient: enums.macroNutrients.CARBOHYDRATE,
                 lowerLimit: null,
                 upperLimit: null,
             },
             fat: {
-                macroNutrient: 'Protein',
+                macroNutrient: enums.macroNutrients.PROTEIN,
                 lowerLimit: null,
                 upperLimit: null,
             },
             protein: {
-                macroNutrient: 'Fat',
+                macroNutrient: enums.macroNutrients.FAT,
                 lowerLimit: null,
                 upperLimit: null,
             },
             allergens: {
-                milk: false,
-                eggs: false,
-                wheat: false,
-                shellfish: false,
-                soy: false,
-                nuts: false,
+                milk: {
+                    name: enums.allergens.MILK,
+                    value: false
+                },
+                eggs: {
+                    name: enums.allergens.EGGS,
+                    value: false
+                },
+                wheat: {
+                    name: enums.allergens.WHEAT,
+                    value: false
+                },
+                shellfish: {
+                    name: enums.allergens.SHELLFISH,
+                    value: false
+                },
+                soy: {
+                    name: enums.allergens.SOY,
+                    value: false
+                },
+                nuts: {
+                    name: enums.allergens.NUTS,
+                    value: false
+                },
             },
             requirements: {
-                forVegan: false,
-                forVegetarian: false,
-                ecological: false
+                forVegan: {
+                    name: enums.requirements.FORVEGAN,
+                    value: false
+                },
+                forVegetarian: {
+                    name: enums.requirements.FORVEGETARIAN,
+                    value: false
+                },
+                ecological: {
+                    name: enums.requirements.ECOLOGICAL,
+                    value: false
+                }
             },
             mealTypes: {
                 breakfast: false,
@@ -158,89 +192,50 @@
         }),
 
         computed: {
-            requirementsAsEnum: function () {
-                return [{requirement: this.requirements.forVegan, value: 1},
-                    {requirement: this.requirements.forVegetarian, value: 2},
-                    {requirement: this.requirements.ecological, value: 4}]
-            },
-
             requirementsValue: function () {
-                return this.requirementsAsEnum
-                    .filter(x => x.requirement)
-                    .map(x => x.value)
-                    .reduce((acc, el) => acc + el, null)
+                return requirementsService.getValue(requirementsService.asEnum(this.requirements))
             },
-
-            allergensAsEnum: function () {
-                return [{allergen: this.allergens.milk, value: 1},
-                    {allergen: this.allergens.eggs, value: 2},
-                    {allergen: this.allergens.shellfish, value: 4},
-                    {allergen: this.allergens.soy, value: 8},
-                    {allergen: this.allergens.nuts, value: 16}]
-            },
-
             allergensValue: function () {
-                return this.allergensAsEnum
-                    .filter(x => x.allergen)
-                    .map(x => x.value)
-                    .reduce((acc, el) => acc + el, null)
+                return allergenService.getValue(allergenService.asEnum(this.allergens))
             },
-
             macroNutrients: function () {
-                return [{macroNutrient: this.protein, multiplication: 4},
-                    {macroNutrient: this.carbohydrates, multiplication: 4},
-                    {macroNutrient: this.fat, multiplication: 9}]
+                return macroNutrientService.get(this.protein, this.carbohydrates, this.fat)
             },
-
             maxMacroNutrientsAreFullyField: function () {
-                return this.macroNutrients
-                    .filter(x => x.macroNutrient.upperLimit)
-                    .length === 3
+                return macroNutrientService.maxMacroNutrientsAreFullyField(this.macroNutrients)
             },
-
             minCaloriesFromProvidedMacroNutrients: function () {
-                return this.macroNutrients
-                    .filter(x => x.macroNutrient.lowerLimit)
-                    .map(x => x.macroNutrient.lowerLimit * x.multiplication)
-                    .reduce((acc, el) => acc + el, 0)
+                return macroNutrientService.minCaloriesFromProvidedMacroNutrients(this.macroNutrients)
             },
-
             maxCaloriesFromProvidedMacroNutrients: function () {
-                return this.macroNutrients
-                    .filter(x => x.macroNutrient.upperLimit)
-                    .map(x => x.macroNutrient.upperLimit * x.multiplication)
-                    .reduce((acc, el) => acc + el, 0)
+                return macroNutrientService.maxCaloriesFromProvidedMacroNutrients(this.macroNutrients)
             },
-
-            caloriesLowerLimitIsValid: function () {
-                if (this.maxMacroNutrientsAreFullyField)
-                    return this.calories.lowerLimit <= this.maxCaloriesFromProvidedMacroNutrients;
-                return true;
-            },
-
-            caloriesUpperLimitIsValid: function () {
-                if (this.calories.upperLimit)
-                    return this.calories.upperLimit >= this.minCaloriesFromProvidedMacroNutrients;
-                return true;
-            },
-
             minToMaxMacroNutrientProportionAreValid: function () {
-                if (this.maxMacroNutrientsAreFullyField)
-                    return this.minCaloriesFromProvidedMacroNutrients <= this.maxCaloriesFromProvidedMacroNutrients;
-                return true;
-            }
+                return macroNutrientService.minToMaxMacroNutrientProportionAreValid(
+                    this.maxMacroNutrientsAreFullyField, this.minCaloriesFromProvidedMacroNutrients, this.maxCaloriesFromProvidedMacroNutrients)
+            },
+            caloriesLowerLimitIsValid: function () {
+                return caloriesService.lowerLimitIsValid(
+                    this.maxMacroNutrientsAreFullyField, this.maxCaloriesFromProvidedMacroNutrients, this.calories.lowerLimit)
+            },
+            caloriesUpperLimitIsValid: function () {
+                return caloriesService.upperLimitIsValid(this.calories.upperLimit, this.minCaloriesFromProvidedMacroNutrients)
+            },
         },
 
         methods: {
-            submit() {
-                event.preventDefault();
+            async submit() {
                 if (!this.validate()) {
                     event.preventDefault();
                     return;
                 }
                 this.request = this.buildRequest();
-                //TODO: Call api
-                console.log(this.request);
+                const response = await axios({
+                    url: 'https://localhost:5001/api/recipedetails/findrecipedetails',
+                    method: 'post',
+                    data: JSON.stringify(this.request),
+                    headers: {'Content-Type': 'application/json'}
+                });
             },
 
             buildRequest() {
@@ -250,9 +245,16 @@
                     allowedMealTypes: null,
                     caloriesLowerLimit: this.calories.lowerLimit,
                     caloriesUpperLimit: this.calories.upperLimit,
-                    macroNutrientQuantity: this.macroNutrients
-                        .map(x => x.macroNutrient)
+                    macroNutrientsQuantity: this.getMacroNutrients()
                 }
+            },
+
+            getMacroNutrients() {
+                if (!this.macroNutrients)
+                    return new [];
+                console.log(this.macroNutrients);
+                return this.macroNutrients
+                    .map(x => x.macroNutrient)
             },
 
             validate() {
@@ -276,11 +278,10 @@
 
                 return !this.errors.length;
             },
-            
+
             clear() {
                 this.errors = [];
                 this.$refs.form.reset();
-                this.$refs.searchInput.clear();
             },
         }
     }

@@ -11,7 +11,7 @@
         </v-row>
         <v-row>
             <v-col class="ml-3 mt-n8">
-                <ul v-for="item in ingredients"
+                <ul v-for="item in ingredientsData"
                     :key="item.name">
                     <recipe-details-ingredient :name="item.name" :quantity="item.quantity"></recipe-details-ingredient>
                 </ul>
@@ -26,7 +26,7 @@
         name: "recipe-details-ingredient-list",
         components: {RecipeDetailsIngredient},
         props:{
-            ingredients:{
+            ingredientsData:{
                 type: Array,
                 default: {
                     name: String,

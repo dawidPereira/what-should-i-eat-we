@@ -3,7 +3,7 @@
         <v-col>
             <v-card-title class="teal--text font-weight-bold title-font ml-3">{{ingredientName}}</v-card-title>
             <v-card-text>
-                <v-form @submit="submit" ref="form" v-model="request" :lazy-validation="lazy">
+                <v-form ref="form" :lazy-validation="lazy">
                     <v-col>
                         <v-col>
                             <v-row>
@@ -34,27 +34,27 @@
                             <v-col :cols="6">
                                 <v-subheader class="font-weight-bold header ml-n4">Allergeny:</v-subheader>
                                 <v-checkbox label="Mleko krowie" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.milk.value"/>
                                 <v-checkbox label="Jaja kurze" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.eggs.value"/>
                                 <v-checkbox label="Pszenica" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.wheat.value"/>
                                 <v-checkbox label="Ryby i skorupiaki" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.shellfish.value"/>
                                 <v-checkbox label="Soja" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.soy.value"/>
                                 <v-checkbox label="Orzechy" class="mb-n8 v-label v-input" color="teal"
-                                            v-model="value"/>
+                                            v-model="allergens.nuts.value"/>
                             </v-col>
                             <v-col :cols="6">
                                 <v-row class="requirements">
                                     <v-col>
                                         <v-subheader class="font-weight-bold  ml-n4">Wymagania:</v-subheader>
-                                        <v-checkbox v-model="value" label="Z produktów wegetariańskich"
+                                        <v-checkbox v-model="requirements.forVegetarian.value" label="Z produktów wegetariańskich"
                                                     class="mb-n8 v-label v-input" color="teal"/>
-                                        <v-checkbox v-model="value" label="Z produktów wegańskich"
+                                        <v-checkbox v-model="requirements.forVegan.value" label="Z produktów wegańskich"
                                                     class="mb-n8 v-label v-input" color="teal"/>
-                                        <v-checkbox v-model="value" label="Z produktów ekologicznych"
+                                        <v-checkbox v-model="requirements.ecological.value" label="Z produktów ekologicznych"
                                                     class="mb-n8 v-label v-input" color="teal"/>
                                     </v-col>
                                 </v-row>
@@ -80,6 +80,7 @@
 <script>
     import TealTextField from "../../search/teal-text-field";
     import SearchCheckbox from "@/components/search/search_panel/search-checkbox";
+    import {requirements, allergens, macroNutrients} from '../../../app/enums/enums.js'
 
     export default {
         name: "add-ingredient-card",
@@ -91,22 +92,58 @@
             ingredientName: null,
 
             macroNutrients: {
-                protein: Number,
-                carbohydrates: Number,
-                fat: Number
+                carbohydrates: {
+                    macroNutrient: macroNutrients.CARBOHYDRATE,
+                    value: null,
+                },
+                fat: {
+                    macroNutrient: macroNutrients.PROTEIN,
+                    value: null,
+                },
+                protein: {
+                    macroNutrient: macroNutrients.FAT,
+                    value: null,
+                },
             },
             allergens: {
-                milk: Boolean,
-                eggs: Boolean,
-                wheat: Boolean,
-                shellfish: Boolean,
-                soy: Boolean,
-                nuts: Boolean,
+                milk: {
+                    name: allergens.MILK,
+                    value: false
+                },
+                eggs: {
+                    name: allergens.EGGS,
+                    value: false
+                },
+                wheat: {
+                    name: allergens.WHEAT,
+                    value: false
+                },
+                shellfish: {
+                    name: allergens.SHELLFISH,
+                    value: false
+                },
+                soy: {
+                    name: allergens.SOY,
+                    value: false
+                },
+                nuts: {
+                    name: allergens.NUTS,
+                    value: false
+                },
             },
             requirements: {
-                forVegan: Boolean,
-                forVegetarian: Boolean,
-                ecological: Boolean,
+                forVegan: {
+                    name: requirements.FORVEGAN,
+                    value: false
+                },
+                forVegetarian: {
+                    name: requirements.FORVEGETARIAN,
+                    value: false
+                },
+                ecological: {
+                    name: requirements.ECOLOGICAL,
+                    value: false
+                }
             },
             rules: {
                 nameRules: [v => !!v || 'Podaj nazwę przepisu'],

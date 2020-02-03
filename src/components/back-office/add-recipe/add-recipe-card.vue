@@ -3,7 +3,7 @@
         <v-col>
             <v-card-title class="teal--text font-weight-bold title-font ml-3">{{recipeName}}</v-card-title>
             <v-card-text>
-                <v-form @submit="submit" ref="form" v-model="request" :lazy-validation="lazy" action="https://localhost:5001/whatshouldieat//api/recipe/createrecipe">
+                <v-form ref="form" :lazy-validation="lazy">
                     <v-col>
                         <v-row>
                             <v-col :cols="6">
@@ -84,21 +84,21 @@
                         </v-col>
                         <v-col :cols="3">
                             <v-text-field color="teal" label="koszt / pln" class="v-label v-input " type="number"
-                                          v-model="details.price" :rules="rules.numberInputRules"/>
+                                          v-model="details.approximateCost" :rules="rules.numberInputRules"/>
                         </v-col>
                         <v-col :cols="3">
                             <v-text-field color="teal" label="ilość porcji" class="v-label v-input " type="number"
-                                          v-model="details.serving" :rules="rules.numberInputRules"/>
+                                          v-model="details.servings" :rules="rules.numberInputRules"/>
                         </v-col>
                         <v-col :cols="3">
                             <v-select :items="difficultyLevels" label="poziom trudności" color="teal"
-                                      item-color="teal"
+                                      item-color="teal" v-model="details.difficultyLevel"
                                       class="teal--text input v-label " :rules="rules.numberInputRules"/>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col class="ma-3">
-                            <v-btn width="100%" class="teal white--text" type="submit">Zapisz przepis</v-btn>
+                            <v-btn width="100%" class="teal white--text" @click="submit">Zapisz przepis</v-btn>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -109,6 +109,7 @@
 
 <script>
     import TealTextField from "@/components/search/teal-text-field";
+    import axios from 'axios';
     import {
         TiptapVuetify,
         Heading,
@@ -140,8 +141,9 @@
             details: {
                 difficultyLevel: null,
                 preparationTime: null,
-                price: null,
-                serving: null
+                approximateCost: null,
+                servings: null,
+                mealTypes: "none"
             },
             selectedIngredients: [],
             recipeDescription: null,
@@ -162,21 +164,15 @@
                 numberInputRules: [v => isValidNumber(v) || 'Wartość musi być liczbą większą od zera.', v => !!v || 'Pole wymagane '],
                 ingredientRules: [v => isValidIngredient(v) || 'Wybierz składnik.']
             },
-            request: {
-                name: null,
-                details: null,
-                recipeIngredients: [],
-                image: null,
-                description: null
-            }
+            request: {}
         }),
         props: {
             availableIngredients: {
                 type: Array,
                 default: () => [
-                    {text: "Filet z kurczaka", value: "guid1"},
-                    {text: "Ryż", value: "guid2"},
-                    {text: "Oliwa z oliwek", value: "guid3"}
+                    {text: "Filet z kurczaka", value: '66F46FBB-2270-4948-9468-E0D0B3C698CF'},
+                    {text: "Ryż", value: guid()},
+                    {text: "Oliwa z oliwek", value: guid()}
                 ],
             }
         },
@@ -201,33 +197,52 @@
                     return;
                 }
                 let selectedIngredient = {
-                    ingredientId: this.ingredient,
+                    ingredient: this.ingredient,
                     grams: this.grams
                 };
+                console.log(selectedIngredient);
                 this.selectedIngredients.push(selectedIngredient);
                 this.ingredient = null;
                 this.grams = null;
             },
-            submit() {
-                if (this.validate())
+            async submit() {
+                if (!this.validate())
                     return;
-                this.request = new Object({
-                    recipeIngredients: this.gerRecipeIngredients(this.selectedIngredients),
-                    description: this.recipeDescription,
+                this.request = this.buildRequest();
+                console.log(this.request);
+                let url = 'https://localhost:5001/api/recipe/createRecipe';
+                let response = null;
+                await axios({
+                    url: url,
+                    method: 'post',
+                    data: this.request
+                })
+                    .then(r => response = r)
+                    .catch(error => response = error.response);
+                console.log(response);
+            },
+            buildRequest() {
+                let formData = new FormData();
+                formData.append('File', this.image);
+                let body = {
+                    id: guid(),
                     name: this.recipeName,
-                    details: this.details,
-                    image: this.image
-                });
-                this.$refs.form.submit();
+                    description: this.recipeDescription,
+                    recipeInfo: this.details,
+                    recipeIngredients: this.gerRecipeIngredients(this.selectedIngredients)
+                };
+                console.log(body);
+                formData.append('jsonString', JSON.stringify(body));
+                return formData;
             },
             gerRecipeIngredients(selectedIngredients) {
                 return selectedIngredients.map(this.getRecipeIngredientFromSelectedIngredient)
             },
             getRecipeIngredientFromSelectedIngredient(selectedIngredient) {
-                return new Object({
-                    ingredientId: selectedIngredient.ingredientId,
+                return {
+                    ingredientId: selectedIngredient.ingredient.value,
                     grams: selectedIngredient.grams
-                })
+                }
             },
             validate() {
                 if (!this.$refs.form.validate()) {
@@ -249,6 +264,8 @@
     function isValidIngredient(v) {
         return !(v && v.value === '');
     }
+
+    const guid = require('uuid/v4');
 </script>
 
 <style scoped>

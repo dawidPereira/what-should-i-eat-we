@@ -188,15 +188,21 @@
             request: {},
             rules: {
                 numberInputRules: [v => isValidNumber(v) || 'Wartość musi być liczbą większą od zera.'],
-            },
+            }
         }),
 
         computed: {
+            requirementsAsEnum: function(){
+                return requirementsService.asEnum(this.requirements)
+            } ,
             requirementsValue: function () {
-                return requirementsService.getValue(requirementsService.asEnum(this.requirements))
+                return requirementsService.getValue(this.requirementsAsEnum)
+            },
+            allergensAsEnum: function(){
+                return allergenService.asEnum(this.allergens)
             },
             allergensValue: function () {
-                return allergenService.getValue(allergenService.asEnum(this.allergens))
+                return allergenService.getValue(this.allergensAsEnum)
             },
             macroNutrients: function () {
                 return macroNutrientService.get(this.protein, this.carbohydrates, this.fat)
@@ -221,6 +227,9 @@
             caloriesUpperLimitIsValid: function () {
                 return caloriesService.upperLimitIsValid(this.calories.upperLimit, this.minCaloriesFromProvidedMacroNutrients)
             },
+            minToMaxCaloriesAreValid: function () {
+                return caloriesService.minToMaxCaloriesAreValid(this.calories.lowerLimit, this.calories.upperLimit);
+            }
         },
 
         methods: {
@@ -236,6 +245,7 @@
                     data: JSON.stringify(this.request),
                     headers: {'Content-Type': 'application/json'}
                 });
+                console.log(response);
             },
 
             buildRequest() {
@@ -252,7 +262,6 @@
             getMacroNutrients() {
                 if (!this.macroNutrients)
                     return new [];
-                console.log(this.macroNutrients);
                 return this.macroNutrients
                     .map(x => x.macroNutrient)
             },
@@ -275,6 +284,9 @@
                 if (!this.minToMaxMacroNutrientProportionAreValid)
                     this.errors.push('Kalorie wynikające z podanej maksymalnej ilości makroskładników ' +
                         'są mniejsze niż te wynikające z minimalnej ilości makroskładników.');
+
+                if (!this.minToMaxCaloriesAreValid)
+                    this.errors.push('Minimalna ilość kalorii musi być mniejsza od maksymalnej ilości kalorii.');
 
                 return !this.errors.length;
             },

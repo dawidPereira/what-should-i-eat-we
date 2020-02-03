@@ -16,17 +16,17 @@
                         <v-row>
                             <v-col :cols="4">
                                 <v-text-field color="teal" label="białko / 100g" class="v-label v-input "
-                                              type="number" v-model="macroNutrients.protein"
+                                              type="number" v-model="macroNutrients.protein.value"
                                               :rules="rules.numberInputRules"/>
                             </v-col>
                             <v-col :cols="4">
                                 <v-text-field color="teal" label="węglowodany / 100g" class="v-label v-input "
-                                              type="number" v-model="macroNutrients.carbohydrates"
+                                              type="number" v-model="macroNutrients.carbohydrates.value"
                                               :rules="rules.numberInputRules"/>
                             </v-col>
                             <v-col :cols="4">
                                 <v-text-field color="teal" label="tłuszcz / 100g" class="v-label v-input "
-                                              type="number" v-model="macroNutrients.fat"
+                                              type="number" v-model="macroNutrients.fat.value"
                                               :rules="rules.numberInputRules"/>
                             </v-col>
                         </v-row>
@@ -50,11 +50,13 @@
                                 <v-row class="requirements">
                                     <v-col>
                                         <v-subheader class="font-weight-bold  ml-n4">Wymagania:</v-subheader>
-                                        <v-checkbox v-model="requirements.forVegetarian.value" label="Z produktów wegetariańskich"
+                                        <v-checkbox v-model="requirements.forVegetarian.value"
+                                                    label="Z produktów wegetariańskich"
                                                     class="mb-n8 v-label v-input" color="teal"/>
                                         <v-checkbox v-model="requirements.forVegan.value" label="Z produktów wegańskich"
                                                     class="mb-n8 v-label v-input" color="teal"/>
-                                        <v-checkbox v-model="requirements.ecological.value" label="Z produktów ekologicznych"
+                                        <v-checkbox v-model="requirements.ecological.value"
+                                                    label="Z produktów ekologicznych"
                                                     class="mb-n8 v-label v-input" color="teal"/>
                                     </v-col>
                                 </v-row>
@@ -64,7 +66,7 @@
                             <v-col class="button ml-n4">
                                 <v-list-item>
                                     <v-list-item-content>
-                                        <v-btn class="white--text mb-2" type="submit" color="teal">Dodaj</v-btn>
+                                        <v-btn class="white--text mb-2" @click="submit" color="teal">Dodaj</v-btn>
                                         <v-btn class="white--text" @click="clear" color="teal">Wyczyść</v-btn>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -78,9 +80,13 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import TealTextField from "../../search/teal-text-field";
     import SearchCheckbox from "@/components/search/search_panel/search-checkbox";
-    import {requirements, allergens, macroNutrients} from '../../../app/enums/enums.js'
+    import * as requirementsService from '../../../app/services/requirementService'
+    import * as enums from '../../../app/enums/enums.js'
+    import * as allergenService from '../../../app/services/allergenService.js'
+
 
     export default {
         name: "add-ingredient-card",
@@ -93,55 +99,55 @@
 
             macroNutrients: {
                 carbohydrates: {
-                    macroNutrient: macroNutrients.CARBOHYDRATE,
+                    macroNutrient: enums.macroNutrients.CARBOHYDRATE,
                     value: null,
                 },
                 fat: {
-                    macroNutrient: macroNutrients.PROTEIN,
+                    macroNutrient: enums.macroNutrients.PROTEIN,
                     value: null,
                 },
                 protein: {
-                    macroNutrient: macroNutrients.FAT,
+                    macroNutrient: enums.macroNutrients.FAT,
                     value: null,
                 },
             },
             allergens: {
                 milk: {
-                    name: allergens.MILK,
+                    name: enums.allergens.MILK,
                     value: false
                 },
                 eggs: {
-                    name: allergens.EGGS,
+                    name: enums.allergens.EGGS,
                     value: false
                 },
                 wheat: {
-                    name: allergens.WHEAT,
+                    name: enums.allergens.WHEAT,
                     value: false
                 },
                 shellfish: {
-                    name: allergens.SHELLFISH,
+                    name: enums.allergens.SHELLFISH,
                     value: false
                 },
                 soy: {
-                    name: allergens.SOY,
+                    name: enums.allergens.SOY,
                     value: false
                 },
                 nuts: {
-                    name: allergens.NUTS,
+                    name: enums.allergens.NUTS,
                     value: false
                 },
             },
             requirements: {
                 forVegan: {
-                    name: requirements.FORVEGAN,
+                    name: enums.requirements.FORVEGAN,
                     value: false
                 },
                 forVegetarian: {
-                    name: requirements.FORVEGETARIAN,
+                    name: enums.requirements.FORVEGETARIAN,
                     value: false
                 },
                 ecological: {
-                    name: requirements.ECOLOGICAL,
+                    name: enums.requirements.ECOLOGICAL,
                     value: false
                 }
             },
@@ -151,24 +157,62 @@
             },
             request: {},
         }),
+        computed: {
+            allergensAsEnum: function () {
+                return allergenService.asEnum(this.allergens)
+            },
+            allergensValue: function () {
+                return allergenService.getValue(this.allergensAsEnum)
+            },
+            requirementsAsEnum: function () {
+                return requirementsService.asEnum(this.requirements)
+            },
+            requirementsValue: function () {
+                return requirementsService.getValue(this.requirementsAsEnum)
+            },
+            shares: function () {
+                return [
+                    {
+                        macroNutrient: this.macroNutrients.protein.macroNutrient,
+                        share: this.macroNutrients.protein.value / 100
+                    },
+                    {
+                        macroNutrient: this.macroNutrients.carbohydrates.macroNutrient,
+                        share: this.macroNutrients.carbohydrates.value / 100
+                    },
+                    {
+                        macroNutrient: this.macroNutrients.fat.macroNutrient,
+                        share: this.macroNutrients.fat.value / 100
+                    }];
+            }
+        },
         methods: {
-            submit() {
-                if (this.validate())
+            async submit() {
+                if (!this.validate()) {
+                    event.preventDefault();
                     return;
-                this.request = new Object({
-                    recipeIngredients: this.gerRecipeIngredients(this.selectedIngredients),
-                    description: this.recipeDescription,
-                    name: this.recipeName,
-                    details: this.details,
-                    image: this.image
-                });
+                }
+                this.request = this.buildRequest();
+                let response = null;
+                    await axios({
+                    url: 'https://localhost:5001/api/ingredient/createIngredient',
+                    method: 'post',
+                    data: JSON.stringify(this.request),
+                    headers: {'Content-Type': 'application/json'}})
+                    .then(r => response = r)
+                    .catch(error => response = error.response);
+            },
+            buildRequest() {
+                return {
+                    id: guid(),
+                    name: this.ingredientName,
+                    allergens: this.allergensValue,
+                    requirements: this.requirementsValue,
+                    shares: this.shares,
+                };
             },
             validate() {
-                if (!this.$refs.form.validate()) {
-                    event.preventDefault();
-                    return false;
-                }
-                return true;
+                return this.$refs.form.validate();
             },
             clear() {
                 this.$refs.form.reset();
@@ -182,6 +226,8 @@
         }
         return true;
     }
+
+    const guid = require('uuid/v4');
 </script>
 
 <style scoped>

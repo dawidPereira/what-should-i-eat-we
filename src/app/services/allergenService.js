@@ -3,6 +3,7 @@
 const asEnum = function (allergens) {
     return [{allergen: allergens.milk},
         {allergen: allergens.eggs},
+        {allergen: allergens.wheat},
         {allergen: allergens.shellfish},
         {allergen: allergens.soy},
         {allergen: allergens.nuts}]
